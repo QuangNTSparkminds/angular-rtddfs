@@ -8,23 +8,28 @@
   class="error"
   *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('minlength')"
 >
-  This field is invalid {{ itemForm }}
+  This field is not enough min length
 </div>
 <div
   class="error"
   *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('maxlength')"
 >
-  This field is invalid
+  This field is exceed max length
 </div>
 <div
   class="error"
   *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('email')"
 >
-  This field is invalid
+  This email is invalid
 </div>
 <div
   class="error"
-  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('pattern')"
+  *ngIf="
+    (itemForm.dirty || itemForm.touched) &&
+    !itemForm.hasError('minlength') &&
+    !itemForm.hasError('maxlength') &&
+    itemForm.hasError('pattern')
+  "
 >
   This field is invalid
 </div>

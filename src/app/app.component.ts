@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 interface UserDto {
   username: string;
@@ -16,7 +18,8 @@ interface UserDto {
 export class AppComponent implements OnInit {
   types: string[];
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  isSummitting: boolean = false;
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   // CODE HERE
   //
@@ -64,18 +67,31 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private async createUser() {
-    await new Promise((res) => setTimeout(res, 2500));
-
-    if (Math.random() < 0.5) {
-      return Promise.reject('Request Failed');
-    }
-    this.registerForm.get('username').hasError();
+  async createUser() {
+    this.isSummitting = true;
+    // await new Promise((res) => setTimeout(res, 2500));
     // Backend call happening here.
-    return {
-      username: this.registerForm.value.username,
-      email: this.registerForm.value.email,
-      type: this.registerForm.value.type,
-    };
+    this.http
+      .post('http://localhost:3000/register', {
+        username: this.registerForm.value.username,
+        email: this.registerForm.value.email,
+        type: this.registerForm.value.type,
+        password: this.registerForm.value.password,
+      })
+      .pipe(map((res) => res))
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          return {
+            username: this.registerForm.value.username,
+            email: this.registerForm.value.email,
+            type: this.registerForm.value.type,
+          };
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => (this.isSummitting = false),
+      });
   }
 }
