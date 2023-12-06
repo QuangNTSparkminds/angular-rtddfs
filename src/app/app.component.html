@@ -1,0 +1,44 @@
+<form id="user-form" [formGroup]="registerForm">
+  Add Form here
+  <div>
+    <input
+      id="username"
+      placeholder="Enter username"
+      formControlName="username"
+    />
+    <app-error-message [itemForm]="registerForm.get('username')">
+    </app-error-message>
+  </div>
+  <div>
+    <input id="email" placeholder="Enter email" formControlName="email" />
+    <app-error-message [itemForm]="registerForm.get('email')">
+    </app-error-message>
+  </div>
+  <div>
+    <select id="type" formControlName="type">
+      <option value="" style="display: none" selected>Select</option>
+      <option [value]="type" *ngFor="let type of types">
+        {{ type }}
+      </option>
+    </select>
+    <app-error-message [itemForm]="registerForm.get('type')">
+    </app-error-message>
+  </div>
+  <div>
+    <input
+      id="password"
+      placeholder="Enter password"
+      formControlName="password"
+    />
+    <app-error-message [itemForm]="registerForm.get('password')">
+    </app-error-message>
+  </div>
+  <button
+    type="submit"
+    form="user-form"
+    [disabled]="registerForm.invalid"
+    (click)="createUser()"
+  >
+    Submit
+  </button>
+</form>

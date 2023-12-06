@@ -1,0 +1,30 @@
+<div
+  class="error"
+  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('required')"
+>
+  This field is required
+</div>
+<div
+  class="error"
+  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('minlength')"
+>
+  This field is invalid {{ itemForm }}
+</div>
+<div
+  class="error"
+  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('maxlength')"
+>
+  This field is invalid
+</div>
+<div
+  class="error"
+  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('email')"
+>
+  This field is invalid
+</div>
+<div
+  class="error"
+  *ngIf="(itemForm.dirty || itemForm.touched) && itemForm.hasError('pattern')"
+>
+  This field is invalid
+</div>
